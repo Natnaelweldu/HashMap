@@ -1,15 +1,15 @@
 // importing Node class
-import {Node} from "./node.js";
+import { Node } from "./node.js";
 
-export class linkedList {
+export class LinkedList {
   constructor() {
     this.head = null;
     this.count = 0;
   }
 
-  append(value) {
+  append(data) {
     this.count++;
-    const newNode = new Node(value);
+    const newNode = new Node(data);
     if (!this.head) {
       // for first element insertion
       this.head = newNode;
@@ -22,9 +22,9 @@ export class linkedList {
     temp.next = newNode;
   }
 
-  prepend(value) {
+  prepend(data) {
     this.count++;
-    const newNode = new Node(value);
+    const newNode = new Node(data);
     let temp = this.head;
 
     this.head = newNode;
@@ -78,21 +78,21 @@ export class linkedList {
     this.count--;
   }
 
-  contains(value) {
+  contains(key) {
     let temp = this.head;
     while (temp != null) {
-      if (temp.value == value) return true;
+      if (temp.data.key == key) return true;
       temp = temp.next;
     }
     return false;
   }
 
-  find(value) {
+  find(key) {
     let index = 0;
     let temp = this.head;
 
     while (temp !== null) {
-      if (temp.value == value) {
+      if (temp.data.key == key) {
         return index;
       }
       index++;
@@ -116,24 +116,24 @@ export class linkedList {
     return listString;
   }
 
-  insertAt(value, index) {
+  insertAt(data, index) {
     // check if the index is valid
     const size = this.size();
     if (index > size || index < 0) {
       throw new RangeError("Index is out of bounds for the list.");
     }
 
-    const newNode = new Node(value);
+    const newNode = new Node(data);
 
     // Case 1: Insert at the start
     if (index == 0) {
-      this.prepend(value);
+      this.prepend(data);
       return;
     }
 
     // Case 2: Insert at the end
     if (!this.head) {
-      this.append(value);
+      this.append(data);
       return;
     }
 
@@ -185,5 +185,20 @@ export class linkedList {
     }
 
     previous.next = current.next;
+  }
+
+  //replace the value for the exisiting key
+  replace(keyToReplace, newValue) {
+    let temp = this.head;
+    // console.log(temp);
+
+    while (temp != null) {
+      if (temp.data && temp.data.key === keyToReplace) {
+        temp.data.value = newValue;
+        return true; 
+      }
+      temp = temp.next;
+    }
+    return false;
   }
 }
